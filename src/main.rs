@@ -74,24 +74,22 @@ fn num_to_hand(num: i8) -> Result<Hand, String> {
 }
 
 
+fn get_hand(input: &mut String) -> Result<Hand, String> {
+    io::stdin()
+        .read_line(input)
+        .expect("Failed to read line.");
+    *input = input.trim_end().to_owned(); 
+    let input_num: i8 = input.parse().expect("Input a number!");
+    num_to_hand(input_num)
+}
+
+
 fn main() {
     let mut hand1 = String::new();
     let mut hand2 = String::new();
 
-    io::stdin()
-        .read_line(&mut hand1)
-        .expect("Failed to read line.");
-    
-    hand1 = hand1.trim_end().to_owned(); 
-    let hand1_num: i8 = hand1.parse().expect("Input a number!");
-    let hand1_hand = num_to_hand(hand1_num);
-
-    io::stdin()
-        .read_line(&mut hand2)
-        .expect("Failed to read line.");
-    hand2 = hand2.trim_end().to_owned();
-    let hand2_num: i8 = hand2.parse().expect("Input a number!");
-    let hand2_hand = num_to_hand(hand2_num);
+    let hand1_hand = get_hand(&mut hand1);
+    let hand2_hand = get_hand(&mut hand2);
 
     let res = fight(hand1_hand.unwrap(), hand2_hand.unwrap());
 
