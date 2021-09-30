@@ -1,4 +1,4 @@
-mod hand;
+mod janken;
 
 fn main() {
     let mut hand1 = String::new();
