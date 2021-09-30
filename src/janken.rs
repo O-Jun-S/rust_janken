@@ -15,48 +15,36 @@ pub enum JankenResult {
     Draw,
 }
 
-pub fn fight(hand: Hand, other: Hand) -> JankenResult {
-    if hand == Hand::Rock {
-        if other == Hand::Rock {
-            JankenResult::Draw
-        }
-
-        else if other == Hand::Scissor {
-            JankenResult::Win
-        }
-
-        else {
-            JankenResult::Lose
-        }
-
-        
-    }
-
-    else if hand == Hand::Scissor {
-        if other == Hand::Rock {
-            JankenResult::Lose
-        }
-
-        else if other == Hand::Scissor {
-            JankenResult::Draw
-        }
-
-        else {
-            JankenResult::Win
+impl Hand {
+    pub fn fight(&self, other: &Hand) -> JankenResult {
+        match *self {
+            Hand::Rock => self.rock_fight(other),
+            Hand::Scissor => self.scissor_fight(other),
+            Hand::Paper => self.paper_fight(other),
         }
     }
 
-    else {
-        if other == Hand::Rock {
-            JankenResult::Win
+    fn rock_fight(&self, other: &Hand) -> JankenResult {
+        match *other {
+            Hand::Rock => JankenResult::Draw,
+            Hand::Scissor => JankenResult::Win,
+            Hand::Paper => JankenResult::Lose,
         }
+    }
 
-        else if other == Hand::Scissor {
-            JankenResult::Lose
+    fn scissor_fight(&self, other: &Hand) -> JankenResult {
+        match *other {
+            Hand::Rock => JankenResult::Lose,
+            Hand::Scissor => JankenResult::Draw,
+            Hand::Paper => JankenResult::Win,
         }
+    }
 
-        else {
-            JankenResult::Draw
+    fn paper_fight(&self, other: &Hand) -> JankenResult {
+        match *other {
+            Hand::Rock => JankenResult::Win,
+            Hand::Scissor => JankenResult::Lose,
+            Hand::Paper => JankenResult::Draw,
         }
     }
 }
