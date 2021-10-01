@@ -26,6 +26,6 @@ fn main() {
     let mut hand2 = String::new();
     let hand2_hand = janken::get_hand(&mut hand2).unwrap();
 
-    let res = hand1_hand.fight(&hand2_hand);
+    let res = janken::Hand::fight(&hand1_hand, &hand2_hand);
     janken::print_result(res);
 }

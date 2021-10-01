@@ -16,35 +16,27 @@ pub enum JankenResult {
 }
 
 impl Hand {
-    pub fn fight(&self, other: &Hand) -> JankenResult {
+    pub fn fight(me: &Hand, other: &Hand) -> JankenResult {
+        match (me.clone(), other.clone()) {
+            (Hand::Rock, Hand::Rock) => JankenResult::Draw,
+            (Hand::Rock, Hand::Scissor) => JankenResult::Win,
+            (Hand::Rock, Hand::Paper) => JankenResult::Lose,
+
+            (Hand::Scissor, Hand::Rock) => JankenResult::Lose,
+            (Hand::Scissor, Hand::Scissor) => JankenResult::Draw,
+            (Hand::Scissor, Hand::Paper) => JankenResult::Win,
+
+            (Hand::Paper, Hand::Rock) => JankenResult::Win,
+            (Hand::Paper, Hand::Scissor) => JankenResult::Lose,
+            (Hand::Paper, Hand::Paper) => JankenResult::Draw,
+        }
+    }
+
+    pub fn clone(&self) -> Hand {
         match *self {
-            Hand::Rock => self.rock_fight(other),
-            Hand::Scissor => self.scissor_fight(other),
-            Hand::Paper => self.paper_fight(other),
-        }
-    }
-
-    fn rock_fight(&self, other: &Hand) -> JankenResult {
-        match *other {
-            Hand::Rock => JankenResult::Draw,
-            Hand::Scissor => JankenResult::Win,
-            Hand::Paper => JankenResult::Lose,
-        }
-    }
-
-    fn scissor_fight(&self, other: &Hand) -> JankenResult {
-        match *other {
-            Hand::Rock => JankenResult::Lose,
-            Hand::Scissor => JankenResult::Draw,
-            Hand::Paper => JankenResult::Win,
-        }
-    }
-
-    fn paper_fight(&self, other: &Hand) -> JankenResult {
-        match *other {
-            Hand::Rock => JankenResult::Win,
-            Hand::Scissor => JankenResult::Lose,
-            Hand::Paper => JankenResult::Draw,
+            Hand::Rock => Hand::Rock,
+            Hand::Scissor => Hand::Scissor,
+            Hand::Paper => Hand::Paper,
         }
     }
 }
